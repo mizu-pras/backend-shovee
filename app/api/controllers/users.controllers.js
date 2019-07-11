@@ -1,6 +1,7 @@
 const { userModel, validateUser } = require('../models/users.models')
 const userDetailModel = require('../models/userDetails.models')
 const bcrypt 	= require('bcrypt')
+const saltRounds    = 10
 const Joi 		= require('@hapi/joi')
 const _ 		= require('lodash')
 
