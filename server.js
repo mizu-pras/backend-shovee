@@ -22,6 +22,8 @@ const {cloudinaryConfig} = require('./config/cloudinary.config')
 
 const app	 = express()
  
+app.set('view engine', 'ejs')
+
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
@@ -52,7 +54,7 @@ mongoose.connect('mongodb+srv://shovee:shoveeadmin@cluster0-r6cir.mongodb.net/te
 // public routes
 app.get('/', (req, res) => {
 	res.json({message: 'server running'})
-
+    // res.render('index')
 })
 
 app.use('/', resetPassword)
