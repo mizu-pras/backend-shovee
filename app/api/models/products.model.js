@@ -17,7 +17,7 @@ const ProductModel = new mongoose.Schema({
     },
     sold: {
         type: Number,
-        required: false,
+        default: 0,
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,15 +33,12 @@ const ProductModel = new mongoose.Schema({
     },
     stok: {
         type: Number,
+        default: 0,
         required: true,
     },
     brand: {
         type: String,
         required: true,
-    },
-    condition: {
-        type: String,
-        enum: ['Baru', 'Bekas'],
     },
     seller: {
         type: mongoose.Schema.Types.ObjectId,

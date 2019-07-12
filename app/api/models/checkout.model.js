@@ -20,6 +20,9 @@ const CheckoutModel = new mongoose.Schema({
     status: {
         type: Number,
         default: 0
+    },
+    deviceId: {
+        type: String
     }
 }, {
     timestamps: true
