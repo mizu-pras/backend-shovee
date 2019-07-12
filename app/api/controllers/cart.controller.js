@@ -40,7 +40,15 @@ exports.create = async (req, res) => {
 
     await cartModel.create({ user, product })
             .then(data => {
-                cartModel.findById(data._id).populate('user').populate('product')
+                cartModel.findById(data._id).populate({
+                    path:'user', select: ['_id', 'name']
+                }).populate({
+                    path:'product', populate: {
+                        path: 'seller', select: ['name', 'address', 'image_profil'], populate: {
+                            path: 'user', select: ['_id', 'username', 'phone']
+                        }
+                    }
+                })
                     .then(createdData => (
                         res.json({
                             status: 200,
