@@ -35,6 +35,9 @@ exports.setUserDetail = async (req, res) => {
         images = await _doMultipleUpload(req)
     	req.body.image_profil = images[0];
     }
+    else {
+    	req.body.image_profil = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';	
+    }
 
     let address = {}
     await userDetailModel.findOne({user})
