@@ -96,7 +96,7 @@ exports.create = async (req, res) => {
                 productsModel.findById(data._id).populate({
                     path: 'category', select: ['name']
                 }).populate({
-                    path: 'seller', select: ['name', 'adress', 'image_profil'], populate: {
+                    path: 'seller', select: ['name', 'address', 'image_profil'], populate: {
                         path: 'user', select: ['_id', 'username', 'phone']}})
                     .then(createdData => (
                         res.json({
