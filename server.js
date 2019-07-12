@@ -44,7 +44,7 @@ mongoose.set('useCreateIndex', true)
 mongoose.connect('mongodb+srv://shovee:shoveeadmin@cluster0-r6cir.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useFindAndModify: false, 
-    dbName: 'shovee'
+    dbName: 'shovee_production'
 }).then(() => {
     console.log('connection success')
 }).catch(err => {
