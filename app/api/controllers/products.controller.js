@@ -23,7 +23,7 @@ exports.findAll = async (req, res) => {
     await productsModel.find({
                 'name': {$regex: search, $options: 'i'}
             }).populate({path: 'category', select: ['name']}).populate({
-                path: 'seller', select: ['name', 'alamat', 'image_profil'], populate: {
+                path: 'seller', select: ['name', 'address', 'image_profil'], populate: {
                     path: 'user', select: ['_id', 'username', 'phone']
                 }
             })
@@ -96,7 +96,7 @@ exports.create = async (req, res) => {
                 productsModel.findById(data._id).populate({
                     path: 'category', select: ['name']
                 }).populate({
-                    path: 'seller', select: ['name', 'image_profil'], populate: {
+                    path: 'seller', select: ['name', 'image_profil', 'address'], populate: {
                         path: 'user', select: ['_id', 'username', 'phone']}})
                     .then(createdData => (
                         res.json({
