@@ -23,7 +23,7 @@ exports.findAll = async (req, res) => {
     await productsModel.find({
                 'name': {$regex: search, $options: 'i'}
             })
-            .populate({path: 'category', select: ['name']}).populate({path: 'seller', select: ['name', 'alamat'], populate: {path: 'user', select: ['_id']}})
+            .populate({path: 'category', select: ['name']}).populate({path: 'seller', select: ['name', 'alamat'], populate: {path: 'user', select: ['_id', 'username']}})
             .sort({[filter]: sort})
             .limit(limit)
             .skip(offset)
@@ -71,7 +71,7 @@ exports.create = async (req, res) => {
                 .catch(err => res.status(500).json({
                     message: err
                 }))
-    console.log(seller)
+                
     if(req.files.length > 0) {
         images = await _doMultipleUpload(req)
         console.log('iyes')
@@ -107,16 +107,21 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const { name, price, thumbnail } = req.body
+    const updated = {...req.body}
 
-    if (!name || !price || !thumbnail) {
-        return res.status(400).json({
-            status: 400,
-            message: "name, price, thumbnail cannot be null"
-        })
+    let images
+
+    if(req.files.length > 0) {
+        images = await _doMultipleUpload(req)
+        console.log('no')
+        updated.images = images
+        if (images)
+            data.thumbnail = images[0]
     }
 
-    await productsModel.findByIdAndUpdate(req.params.id, {name, price, thumbnail}, {new: true})
+    console.log(req)
+
+    await productsModel.findByIdAndUpdate(req.params.id, updated, {new: true})
             .then(data => {
                 if (!data) {
                     return res.status(404).json({

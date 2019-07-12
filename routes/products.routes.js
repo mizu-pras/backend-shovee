@@ -11,7 +11,7 @@ const auth = require('../app/api/middleware/auth')
 router.get('/', productsController.findAll)
 router.get('/:id', productsController.findById)
 router.post('/', auth, multerUploads, productsController.create)
-router.patch('/:id', auth, productsController.update)
+router.patch('/:id', auth, multerUploads, productsController.update)
 router.delete('/:id', auth, productsController.delete)
 
 module.exports = router
