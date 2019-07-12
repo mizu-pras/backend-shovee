@@ -64,6 +64,17 @@ exports.findById = async (req, res) => {
             ))
 }
 
+exports.findByUser = async (req, res) => {
+    const seller = await userDetailsModel.findOne({user: req.user})
+                .then(result => result)
+                .catch(err => res.status(500).json({
+                    message: err
+                }))
+    productsModel.find({seller: seller._id}).then(data => {
+        res.json(data)
+    })
+}
+
 exports.create = async (req, res) => {
     const { name, price, category, city, description, brand, stok } = req.body
     //const seller = req.user._id

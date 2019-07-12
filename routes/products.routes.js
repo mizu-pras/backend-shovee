@@ -9,6 +9,7 @@ const {multerUploads} = require('../app/api/middleware/multer.middleware')
 const auth = require('../app/api/middleware/auth')
 
 router.get('/', productsController.findAll)
+router.get('/user', auth, productsController.findByUser)
 router.get('/:id', productsController.findById)
 router.post('/', auth, multerUploads, productsController.create)
 router.patch('/:id', auth, multerUploads, productsController.update)
