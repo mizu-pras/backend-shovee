@@ -9,8 +9,8 @@ exports.findAllUserCart = async (req, res) => {
         path:'user', select: ['_id', 'name']
     }).populate({
         path:'product', populate: {
-            path: 'seller', populate: {
-                path: 'user', select: ['username', 'phone']
+            path: 'seller', select: ['name', 'address', 'image_profil'], populate: {
+                path: 'user', select: ['_id', 'username', 'phone']
             }
         }
     })
