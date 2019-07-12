@@ -19,6 +19,7 @@
     "crypto": "1.0.1",
     "datauri": "^2.0.0",
     "dotenv": "^8.0.0",
+    "ejs": "2.6.2",
     "express": "^4.17.1",
     "joi-objectid": "2.0.0",
     "jsonwebtoken": "^8.5.1",

@@ -47,11 +47,11 @@ exports.create = async (req, res, next) => {
 				const token = user.generateAuthToken()
 
                 let address = {
-                    provinsi: '',
-                    kab: '',
-                    kec: '',
-                    alamat_lengkap: '',
-                    pos: ''
+                    province: '',
+                    city: '',
+                    district: '',
+                    full_addrees: '',
+                    zip_code: ''
                 }
 
                 const userDetail = new userDetailModel({
@@ -60,7 +60,7 @@ exports.create = async (req, res, next) => {
                     gender: 'L',
                     tanggal_lahir: '',
                     image_profil: '',
-                    alamat: address
+                    address: address
                 })
 
                 userDetail.save()

@@ -16,14 +16,18 @@ exports.resetpassword = async (req, res, next) => {
 	try {
         let email = jwt.decode(token, config.get('PrivateKey')).email;
         
-        res.send(
-			`<form action="/resetpassword" method="POST">
-	        	<input type="hidden" name="token" value="${token}" />
-	        	<input type="teaxt" name="email" value="${email}" disabled />
-	        	<input type="password" name="password" value="" placeholder="New password..." required />
-	        	<input type="password" name="password2" value="" placeholder="Confirm new password..." required />
-	        	<input type="submit" value="Reset Password" />
-	    	</form>`);
+   //      res.send(
+			// `<div style='max-width:400px;margin:auto;background:#dfdfdf;padding:0 16px'>
+			// <form action="/resetpassword" method="POST">
+	  //       	<input type="hidden" name="token" value="${token}" />
+	  //       	<input style='width:100%;margin-bottom:10px' type="teaxt" name="email" value="${email}" disabled />
+	  //       	<input style='width:100%;margin-bottom:10px' type="password" name="password" value="" placeholder="New password..." required />
+	  //       	<input style='width:100%;margin-bottom:10px' type="password" name="password2" value="" placeholder="Confirm new password..." required />
+	  //       	<input type="submit" value="Reset Password" />
+	  //   	</form>
+	  //   	</div>`);
+
+	  res.render('forgetpassword', {email: email, token: token})
 
     }
     catch (err) {
@@ -58,9 +62,10 @@ exports.resetpasswordProccess = async (req, res, next) => {
         await userModel.findOneAndUpdate({email}, {password: req.body.password})
 		.then(data => {
 			
-			res.send(
-				`success update password user ${email}`
-			);
+			// res.send(
+			// 	`success update password user ${email}`
+			// );
+			res.render('resetpassword', {email: email})
 
 		})
 		.catch(err => {
