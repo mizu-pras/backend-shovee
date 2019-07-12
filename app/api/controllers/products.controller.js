@@ -65,14 +65,63 @@ exports.findById = async (req, res) => {
 }
 
 exports.findByUser = async (req, res) => {
-    const seller = await userDetailsModel.findOne({user: req.user})
-                .then(result => result)
-                .catch(err => res.status(500).json({
-                    message: err
-                }))
-    productsModel.find({seller: seller._id}).then(data => {
-        res.json(data)
+    let user = req.user
+
+    let seller;
+    await userDetailsModel.findOne({user}).populate('user')
+    .then(data=>{
+        seller=data
     })
+
+    let search = req.query.search ? req.query.search : '' 
+    let limit = req.query.limit ? parseInt(req.query.limit) : 10
+    let filter = req.query.filter ? req.query.filter : 'updatedAt'
+    let page = req.query.page ? parseInt(req.query.page) : 1
+    let offset = (page - 1) * limit
+    let sort = req.query.sort ? req.query.sort.toLowerCase() : 'desc'
+    let totalRows
+
+     let totalPage = Math.ceil(parseInt(totalRows) / limit)
+
+    await productsModel.countDocuments({
+                'name': {$regex: search, $options: 'i'},
+                seller
+            })
+            .then(data => totalRows = data)
+
+    await productsModel.find({
+                'name': {$regex: search, $options: 'i'},
+                seller
+            }).populate({path: 'category', select: ['name']}).populate({
+                path: 'seller', select: ['name', 'address', 'image_profil'], populate: {
+                    path: 'user', select: ['_id', 'username', 'phone']
+                }
+            })
+            .sort({[filter]: sort})
+            .limit(limit)
+            .skip(offset)
+            .then(data => (
+                res.json({
+                    status: 200,
+                    totalRows,
+                    limit,
+                    page,
+                    totalPage,
+                    data
+                })
+            ))
+            .catch(err => {
+                return res.status(500).json({
+                    status: 500,
+                    message: err.message || 'same error'
+                })
+            })
+
+    // res.json({
+    //     seller
+    // })
+
+
 }
 
 exports.create = async (req, res) => {
