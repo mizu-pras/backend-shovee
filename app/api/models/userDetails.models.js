@@ -21,20 +21,20 @@ const UserDetailModel = new mongoose.Schema({
     image_profil: {
         type: 'String'
     },
-    alamat: {
-        provinsi: {
+    address: {
+        province: {
             type: 'String'
         },
-        kab: {
+        city: {
             type: 'String'
         },
-        kec: {
+        district: {
             type: 'String'
         },
-        alamat_lengkap: {
+        full_addrees: {
             type: 'String'
         },
-        pos: {
+        zip_code: {
             type: 'String'
         }
     }
