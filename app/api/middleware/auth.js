@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
     }
  
     try {
-        const decoded = jwt.verify(token, config.get('PrivateKey'));
+        const decoded = jwt.verify(token, config.get('PrivateKey'), {expiresIn: '3600s'});
         req.user = decoded;
         next();
     }
