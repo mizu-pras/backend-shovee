@@ -1,6 +1,7 @@
 'use strict'
 
 const checkoutModel = require('../models/checkout.model')
+const cartModel = require('../models/cart.model')
 const sendNotification = require('../middleware/sendNotification.lib')
 
 exports.findAllUserTransaction = async (req, res) => {
@@ -63,6 +64,12 @@ exports.create = async (req, res) => {
                     )).then(() => {
                         sendNotification({"en": "Your transaction is processed"}, playerId)
                         console.log('sent')
+                    }).then(() => {
+                        console.log('sending')
+                        product.map(item => {
+                            cartModel.findByIdAndDelete(item)
+                            .then(result => console.log(result))
+                        })
                     })
             })
             .catch(err => {

@@ -9,7 +9,7 @@ const multerUploads = multer({ storage }).array('images')
 const dUri = new DataUri()
 
 const dataUri = req => (
-    dUri.format(path.extname(req.originalname).toString(), req.buffer)
+    path.extname(req.originalname).toString()
 )
 
 exports.multerUploads = multerUploads
